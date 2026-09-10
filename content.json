@@ -1,0 +1,38 @@
+{
+  "quienSoy": {
+    "titulo": "Lic. Carolina Amuchastegui",
+    "parrafo1": "Soy Licenciada en Terapia Ocupacional con formación en Programación Neurolingüística (PNL) y Biodecodificación. Me especializo en el abordaje integral del dolor crónico y en ayudarte a recuperar tu calidad de vida.",
+    "parrafo2": "Mi enfoque combina la evidencia científica de la Terapia Ocupacional con herramientas de transformación mental y emocional, brindándote un camino personalizado hacia el bienestar.",
+    "parrafo3": "A través de sesiones individuales, formaciones y mi libro, comparto estrategias que podés aplicar en tu vida cotidiana para reducir limitaciones y potenciar tu autonomía.",
+    "imagen": "assets/foto-carolina.jpg"
+  },
+  "turnos": {
+    "subtitulo": "Agenda online",
+    "titulo": "Pedí tu turno",
+    "descripcion": "Completá el formulario y te confirmo disponibilidad en menos de 24 horas. Las sesiones son individuales, online o presenciales.",
+    "emailDestino": "carolina@gestion.en.salud"
+  },
+  "formaciones": [
+    {
+      "icono": "🧠",
+      "titulo": "PNL aplicada a la salud",
+      "descripcion": "Estrategias de Programación Neurolingüística para transformar patrones mentales y mejorar el bienestar físico y emocional.",
+      "emailContacto": "carolina@gestion.en.salud",
+      "imagen": ""
+    },
+    {
+      "icono": "🌿",
+      "titulo": "Biodecodificación",
+      "descripcion": "Exploramos el lenguaje del cuerpo y cómo los conflictos emocionales se manifiestan en síntomas físicos.",
+      "emailContacto": "carolina@gestion.en.salud",
+      "imagen": ""
+    },
+    {
+      "icono": "💪",
+      "titulo": "Fibromialgia: caja de herramientas para salir adelante",
+      "descripcion": "Un abordaje integral para entender y gestionar la fibromialgia, combinando estrategias prácticas de Terapia Ocupacional, PNL y Biodecodificación.",
+      "emailContacto": "carolina@gestion.en.salud",
+      "imagen": ""
+    }
+  ]
+}

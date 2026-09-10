@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Panel de Administración – Carolina Amuchastegui</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal:        #0DB1B9;
+      --teal-dark:   #0a8d94;
+      --teal-light:  #e8f8f9;
+      --beige:       #EDE8DA;
+      --turq-light:  #8DC0BB;
+      --white:       #FFFFFF;
+      --gray-light:  #f5f5f5;
+      --gray:        #e0e0e0;
+      --gray-mid:    #999;
+      --dark:        #1C2B30;
+      --red:         #e05252;
+      --green:       #2ecc71;
+      --font:        'Poppins', sans-serif;
+    }
+
+    body { font-family: var(--font); background: var(--beige); color: var(--dark); min-height: 100vh; }
+
+    /* ── LOGIN ── */
+    #login-screen {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, var(--teal) 0%, var(--turq-light) 100%);
+    }
+    .login-box {
+      background: var(--white); border-radius: 12px;
+      padding: 2.5rem; width: 100%; max-width: 380px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+      text-align: center;
+    }
+    .login-logo { font-size: 2rem; margin-bottom: 0.5rem; }
+    .login-box h1 { font-size: 1.2rem; font-weight: 700; color: var(--teal); margin-bottom: 0.3rem; }
+    .login-box p { font-size: 0.82rem; color: var(--gray-mid); margin-bottom: 1.8rem; }
+    .login-box input {
+      width: 100%; padding: 0.8rem 1rem;
+      border: 1.5px solid var(--gray); border-radius: 6px;
+      font-family: var(--font); font-size: 0.9rem;
+      margin-bottom: 1rem; outline: none; transition: border 0.2s;
+    }
+    .login-box input:focus { border-color: var(--teal); }
+    .login-box button {
+      width: 100%; padding: 0.9rem;
+      background: var(--teal); color: var(--white);
+      border: none; border-radius: 6px;
+      font-family: var(--font); font-size: 0.95rem; font-weight: 600;
+      cursor: pointer; transition: background 0.2s;
+    }
+    .login-box button:hover { background: var(--teal-dark); }
+    .login-error { color: var(--red); font-size: 0.8rem; margin-top: 0.8rem; display: none; }
+
+    /* ── APP SHELL ── */
+    #app { display: none; }
+
+    header {
+      background: var(--teal); color: var(--white);
+      padding: 0 2rem; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 50;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    .header-left { display: flex; align-items: center; gap: 0.8rem; }
+    .header-left .logo { font-size: 1.3rem; }
+    .header-left h1 { font-size: 0.95rem; font-weight: 600; }
+    .header-left span { font-size: 0.75rem; opacity: 0.7; font-weight: 300; }
+    .btn-logout {
+      background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3);
+      color: var(--white); padding: 0.4rem 1rem; border-radius: 5px;
+      font-family: var(--font); font-size: 0.78rem; cursor: pointer; transition: background 0.2s;
+    }
+    .btn-logout:hover { background: rgba(255,255,255,0.25); }
+
+    .layout { display: grid; grid-template-columns: 220px 1fr; min-height: calc(100vh - 60px); }
+
+    /* ── SIDEBAR ── */
+    aside {
+      background: var(--white); border-right: 1px solid var(--gray);
+      padding: 1.5rem 0;
+    }
+    .sidebar-label {
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--gray-mid);
+      padding: 0 1.2rem; margin-bottom: 0.5rem; margin-top: 1rem;
+    }
+    .sidebar-label:first-child { margin-top: 0; }
+    .nav-item {
+      display: flex; align-items: center; gap: 0.7rem;
+      padding: 0.7rem 1.2rem; cursor: pointer;
+      font-size: 0.88rem; font-weight: 500; color: var(--dark);
+      border-left: 3px solid transparent; transition: all 0.15s;
+    }
+    .nav-item:hover { background: var(--teal-light); color: var(--teal); }
+    .nav-item.active { background: var(--teal-light); color: var(--teal); border-left-color: var(--teal); font-weight: 600; }
+    .nav-item .icon { font-size: 1rem; width: 20px; text-align: center; }
+
+    /* ── MAIN CONTENT ── */
+    main { padding: 2rem; overflow-y: auto; }
+
+    .page { display: none; }
+    .page.active { display: block; }
+
+    .page-header { margin-bottom: 2rem; }
+    .page-header h2 { font-size: 1.4rem; font-weight: 700; color: var(--dark); }
+    .page-header p { font-size: 0.85rem; color: var(--gray-mid); margin-top: 0.3rem; }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--white); border-radius: 10px;
+      padding: 1.8rem; margin-bottom: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 1.2rem; color: var(--teal); display: flex; align-items: center; gap: 0.5rem; }
+
+    /* ── FORM ELEMENTS ── */
+    .field { margin-bottom: 1.2rem; }
+    .field label {
+      display: block; font-size: 0.78rem; font-weight: 600;
+      color: var(--gray-mid); text-transform: uppercase; letter-spacing: 0.06em;
+      margin-bottom: 0.4rem;
+    }
+    .field input[type="text"],
+    .field input[type="email"],
+    .field textarea {
+      width: 100%; padding: 0.75rem 1rem;
+      border: 1.5px solid var(--gray); border-radius: 6px;
+      font-family: var(--font); font-size: 0.9rem; color: var(--dark);
+      outline: none; transition: border 0.2s; resize: vertical;
+    }
+    .field input:focus, .field textarea:focus { border-color: var(--teal); }
+    .field textarea { min-height: 100px; }
+    .field-hint { font-size: 0.75rem; color: var(--gray-mid); margin-top: 0.3rem; }
+
+    /* Image upload */
+    .img-upload-wrap { display: flex; gap: 1.5rem; align-items: flex-start; flex-wrap: wrap; }
+    .img-preview {
+      width: 130px; height: 130px; object-fit: cover;
+      border-radius: 8px; border: 2px solid var(--gray);
+      background: var(--gray-light); flex-shrink: 0;
+    }
+    .img-preview-book {
+      width: 100px; height: 140px; object-fit: cover;
+      border-radius: 6px; border: 2px solid var(--gray);
+      background: var(--gray-light); flex-shrink: 0;
+    }
+    .img-upload-controls { flex: 1; min-width: 200px; }
+    .img-upload-controls p { font-size: 0.82rem; color: var(--gray-mid); margin-bottom: 0.8rem; line-height: 1.5; }
+    .upload-btn-label {
+      display: inline-block; padding: 0.6rem 1.2rem;
+      background: var(--teal-light); color: var(--teal);
+      border-radius: 6px; cursor: pointer;
+      font-size: 0.82rem; font-weight: 600; transition: background 0.2s;
+    }
+    .upload-btn-label:hover { background: #c5eaed; }
+    input[type="file"] { display: none; }
+    .img-name { font-size: 0.78rem; color: var(--gray-mid); margin-top: 0.5rem; }
+
+    /* Formaciones cards */
+    .formacion-item {
+      border: 1.5px solid var(--gray); border-radius: 8px;
+      padding: 1.2rem; margin-bottom: 1rem; position: relative;
+      background: var(--gray-light);
+    }
+    .formacion-header { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; }
+    .formacion-num {
+      background: var(--teal); color: var(--white);
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; font-weight: 700; flex-shrink: 0;
+    }
+    .formacion-header h4 { font-size: 0.9rem; font-weight: 600; color: var(--dark); }
+    .formacion-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .btn-add-formacion {
+      display: flex; align-items: center; gap: 0.5rem;
+      background: none; border: 1.5px dashed var(--teal);
+      color: var(--teal); padding: 0.7rem 1.2rem;
+      border-radius: 6px; cursor: pointer; font-family: var(--font);
+      font-size: 0.85rem; font-weight: 600; transition: background 0.2s;
+      margin-top: 0.5rem;
+    }
+    .btn-add-formacion:hover { background: var(--teal-light); }
+    .btn-remove {
+      position: absolute; top: 0.8rem; right: 0.8rem;
+      background: none; border: none; cursor: pointer;
+      color: var(--red); font-size: 1rem; opacity: 0.6; transition: opacity 0.2s;
+    }
+    .btn-remove:hover { opacity: 1; }
+
+    /* Save / Status */
+    .save-bar {
+      display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
+      margin-top: 1.5rem; padding-top: 1.5rem;
+      border-top: 1px solid var(--gray);
+    }
+    .btn-save {
+      background: var(--teal); color: var(--white);
+      border: none; border-radius: 6px; padding: 0.75rem 1.8rem;
+      font-family: var(--font); font-size: 0.92rem; font-weight: 600;
+      cursor: pointer; transition: background 0.2s;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-save:hover:not(:disabled) { background: var(--teal-dark); }
+    .btn-save:disabled { opacity: 0.6; cursor: not-allowed; }
+    .save-status { font-size: 0.82rem; }
+    .save-status.ok { color: var(--green); }
+    .save-status.err { color: var(--red); }
+    .save-status.loading { color: var(--gray-mid); }
+
+    /* GitHub config */
+    .github-card { background: #f0f9fa; border: 1.5px solid var(--turq-light); }
+    .github-card h3 { color: var(--dark); }
+    .config-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .token-info {
+      background: #fff8e1; border: 1px solid #f0c040;
+      border-radius: 6px; padding: 0.8rem 1rem;
+      font-size: 0.8rem; color: #7a5c00; margin-bottom: 1.2rem;
+      line-height: 1.6;
+    }
+    .token-info a { color: var(--teal); }
+
+    /* Preview link */
+    .preview-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      color: var(--teal); text-decoration: none; font-size: 0.82rem;
+      font-weight: 500;
+    }
+    .preview-link:hover { text-decoration: underline; }
+
+    /* Dashboard stats */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+    .stat-card {
+      background: var(--white); border-radius: 8px; padding: 1.2rem;
+      text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .stat-icon { font-size: 1.8rem; margin-bottom: 0.4rem; }
+    .stat-label { font-size: 0.75rem; color: var(--gray-mid); font-weight: 500; }
+    .stat-val { font-size: 1.1rem; font-weight: 700; color: var(--teal); margin-top: 0.2rem; }
+
+    .alert {
+      background: var(--teal-light); border-left: 4px solid var(--teal);
+      border-radius: 0 6px 6px 0; padding: 0.9rem 1.2rem;
+      font-size: 0.85rem; color: var(--dark); margin-bottom: 1.5rem;
+    }
+    .alert strong { color: var(--teal); }
+
+    @media (max-width: 700px) {
+      .layout { grid-template-columns: 1fr; }
+      aside { display: none; }
+      .formacion-grid { grid-template-columns: 1fr; }
+      .config-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+     LOGIN
+═════════════════════════════════════ -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">🌿</div>
+    <h1>Panel de Administración</h1>
+    <p>Carolina Amuchastegui · Gestión en Salud</p>
+    <input type="password" id="login-pass" placeholder="Contraseña" onkeydown="if(event.key==='Enter') doLogin()" />
+    <button onclick="doLogin()">Ingresar</button>
+    <p class="login-error" id="login-error">Contraseña incorrecta. Intentá de nuevo.</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     APP
+═════════════════════════════════════ -->
+<div id="app">
+  <header>
+    <div class="header-left">
+      <span class="logo">🌿</span>
+      <div>
+        <h1>Panel de Administración</h1>
+        <span>gestion.en.salud</span>
+      </div>
+    </div>
+    <div style="display:flex; gap:0.8rem; align-items:center;">
+      <a href="index.html" target="_blank" class="preview-link">👁 Ver sitio</a>
+      <button class="btn-logout" onclick="logout()">Cerrar sesión</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <!-- SIDEBAR -->
+    <aside>
+      <p class="sidebar-label">Secciones</p>
+      <div class="nav-item active" onclick="showPage('dashboard')">
+        <span class="icon">🏠</span> Inicio
+      </div>
+      <div class="nav-item" onclick="showPage('quien-soy')">
+        <span class="icon">👤</span> Quién soy
+      </div>
+      <div class="nav-item" onclick="showPage('turnos')">
+        <span class="icon">📅</span> Turnos
+      </div>
+      <div class="nav-item" onclick="showPage('formaciones')">
+        <span class="icon">📚</span> Formaciones
+      </div>
+      <p class="sidebar-label">Configuración</p>
+      <div class="nav-item" onclick="showPage('github-config')">
+        <span class="icon">⚙️</span> GitHub
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main>
+
+      <!-- ── DASHBOARD ── -->
+      <div class="page active" id="page-dashboard">
+        <div class="page-header">
+          <h2>¡Hola, Carolina! 👋</h2>
+          <p>Desde acá podés editar el contenido de tu sitio web fácilmente.</p>
+        </div>
+
+        <div class="alert">
+          <strong>¿Cómo funciona?</strong> Editá el contenido en cada sección, luego hacé clic en <strong>"Guardar cambios"</strong>. El sitio se actualiza automáticamente en GitHub Pages en 1-2 minutos.
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">👤</div>
+            <div class="stat-label">Quién soy</div>
+            <div class="stat-val">Editable</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📅</div>
+            <div class="stat-label">Turnos</div>
+            <div class="stat-val">Editable</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">📚</div>
+            <div class="stat-label">Formaciones</div>
+            <div class="stat-val" id="dash-form-count">3</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">⚙️</div>
+            <div class="stat-label">GitHub</div>
+            <div class="stat-val" id="dash-github-status">—</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>🚀 Pasos para empezar</h3>
+          <ol style="padding-left:1.2rem; font-size:0.88rem; line-height:2.2; color:var(--dark);">
+            <li>Andá a <strong>⚙️ GitHub</strong> (menú izquierdo) y configurá tu token de acceso</li>
+            <li>Editá el contenido de cada sección</li>
+            <li>Hacé clic en <strong>"Guardar cambios"</strong> en cada sección</li>
+            <li>Esperá 1-2 minutos y ¡tu sitio se actualiza solo!</li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- ── QUIÉN SOY ── -->
+      <div class="page" id="page-quien-soy">
+        <div class="page-header">
+          <h2>👤 Quién soy</h2>
+          <p>Editá tu presentación personal y la foto que aparece en el sitio.</p>
+        </div>
+
+        <div class="card">
+          <h3>📷 Foto de perfil</h3>
+          <div class="img-upload-wrap">
+            <img id="preview-qs-img" src="https://linktr.ee/og/image/CaroAmuchastegui.jpg" class="img-preview" alt="Foto de perfil" />
+            <div class="img-upload-controls">
+              <p>Subí una foto tuya. Tamaño recomendado: <strong>600 x 600 px</strong> o más. Se puede usar formato JPG o PNG.</p>
+              <label class="upload-btn-label" for="upload-qs-img">📁 Elegir foto</label>
+              <input type="file" id="upload-qs-img" accept="image/*" onchange="previewImg(this, 'preview-qs-img', 'qs-img-b64', 'qs-img-name')" />
+              <p class="img-name" id="qs-img-name">Ningún archivo seleccionado</p>
+              <p style="font-size:0.75rem; color:var(--gray-mid); margin-top:0.5rem;">⚠️ La imagen se sube automáticamente al guardar los cambios.</p>
+            </div>
+          </div>
+          <input type="hidden" id="qs-img-b64" />
+        </div>
+
+        <div class="card">
+          <h3>✏️ Texto de presentación</h3>
+          <div class="field">
+            <label>Párrafo 1</label>
+            <textarea id="qs-p1">Soy Licenciada en Terapia Ocupacional con formación en Programación Neurolingüística (PNL) y Biodecodificación. Me especializo en el abordaje integral del dolor crónico y en ayudarte a recuperar tu calidad de vida.</textarea>
+          </div>
+          <div class="field">
+            <label>Párrafo 2</label>
+            <textarea id="qs-p2">Mi enfoque combina la evidencia científica de la Terapia Ocupacional con herramientas de transformación mental y emocional, brindándote un camino personalizado hacia el bienestar.</textarea>
+          </div>
+          <div class="field">
+            <label>Párrafo 3</label>
+            <textarea id="qs-p3">A través de sesiones individuales, formaciones y mi libro, comparto estrategias que podés aplicar en tu vida cotidiana para reducir limitaciones y potenciar tu autonomía.</textarea>
+          </div>
+          <div class="save-bar">
+            <button class="btn-save" onclick="guardarSeccion('quienSoy')">💾 Guardar cambios</button>
+            <span class="save-status" id="status-quienSoy"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TURNOS ── -->
+      <div class="page" id="page-turnos">
+        <div class="page-header">
+          <h2>📅 Turnos</h2>
+          <p>Editá los textos que aparecen en la sección de agenda online.</p>
+        </div>
+
+        <div class="card">
+          <h3>✏️ Textos de la sección</h3>
+          <div class="field">
+            <label>Subtítulo (texto pequeño arriba)</label>
+            <input type="text" id="turnos-subtitulo" value="Agenda online" />
+          </div>
+          <div class="field">
+            <label>Título principal</label>
+            <input type="text" id="turnos-titulo" value="Pedí tu turno" />
+          </div>
+          <div class="field">
+            <label>Descripción</label>
+            <textarea id="turnos-desc">Completá el formulario y te confirmo disponibilidad en menos de 24 horas. Las sesiones son individuales, online o presenciales.</textarea>
+          </div>
+          <div class="field">
+            <label>Email donde recibís las solicitudes de turno</label>
+            <input type="email" id="turnos-email" value="carolina@gestion.en.salud" />
+            <p class="field-hint">Cuando alguien pide un turno, el formulario abre un email hacia esta dirección.</p>
+          </div>
+          <div class="save-bar">
+            <button class="btn-save" onclick="guardarSeccion('turnos')">💾 Guardar cambios</button>
+            <span class="save-status" id="status-turnos"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── FORMACIONES ── -->
+      <div class="page" id="page-formaciones">
+        <div class="page-header">
+          <h2>📚 Formaciones</h2>
+          <p>Editá las tarjetas de formaciones. Podés agregar, editar o eliminar cursos.</p>
+        </div>
+
+        <div class="card">
+          <h3>📋 Tarjetas de formaciones</h3>
+          <div id="formaciones-admin-list"></div>
+          <button class="btn-add-formacion" onclick="agregarFormacion()">
+            ➕ Agregar formación
+          </button>
+          <div class="save-bar">
+            <button class="btn-save" onclick="guardarSeccion('formaciones')">💾 Guardar cambios</button>
+            <span class="save-status" id="status-formaciones"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── GITHUB CONFIG ── -->
+      <div class="page" id="page-github-config">
+        <div class="page-header">
+          <h2>⚙️ Configuración de GitHub</h2>
+          <p>Conectá el panel con tu repositorio de GitHub para guardar los cambios en el sitio.</p>
+        </div>
+
+        <div class="card github-card">
+          <h3>🔑 Datos de conexión</h3>
+
+          <div class="token-info">
+            <strong>¿Cómo obtener el token?</strong><br>
+            1. Ingresá a <a href="https://github.com/settings/tokens/new" target="_blank">github.com/settings/tokens/new</a><br>
+            2. En "Note" escribí: <em>Panel Carolina</em><br>
+            3. En "Expiration" elegí <em>No expiration</em><br>
+            4. Tildá el permiso <em>repo</em> (primera opción)<br>
+            5. Hacé clic en "Generate token" y copiá el código que aparece<br>
+            6. Pegalo en el campo "Token" acá abajo y guardá
+          </div>
+
+          <div class="config-row">
+            <div class="field">
+              <label>Usuario de GitHub</label>
+              <input type="text" id="gh-user" placeholder="tu-usuario-github" />
+              <p class="field-hint">Tu nombre de usuario en GitHub</p>
+            </div>
+            <div class="field">
+              <label>Nombre del repositorio</label>
+              <input type="text" id="gh-repo" placeholder="carolina-amuchastegui" />
+              <p class="field-hint">El nombre exacto del repositorio</p>
+            </div>
+          </div>
+          <div class="field">
+            <label>Token de acceso personal</label>
+            <input type="password" id="gh-token" placeholder="ghp_..." />
+            <p class="field-hint">⚠️ Este token se guarda solo en este navegador y nunca sale de tu dispositivo.</p>
+          </div>
+
+          <div class="save-bar">
+            <button class="btn-save" onclick="guardarGitHub()">💾 Guardar configuración</button>
+            <button class="btn-save" style="background:#555;" onclick="testGitHub()">🔌 Probar conexión</button>
+            <span class="save-status" id="status-github"></span>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════
+const ADMIN_PASSWORD = 'carolina2025'; // Cambiá esto por tu contraseña
+
+// ═══════════════════════════════════════
+// LOGIN
+// ═══════════════════════════════════════
+function doLogin() {
+  const pass = document.getElementById('login-pass').value;
+  if (pass === ADMIN_PASSWORD) {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    loadGitHubConfig();
+    loadContent();
+  } else {
+    document.getElementById('login-error').style.display = 'block';
+    document.getElementById('login-pass').value = '';
+  }
+}
+function logout() {
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-pass').value = '';
+}
+
+// ═══════════════════════════════════════
+// NAVEGACIÓN
+// ═══════════════════════════════════════
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+// ═══════════════════════════════════════
+// IMÁGENES — PREVIEW
+// ═══════════════════════════════════════
+function previewImg(input, previewId, b64Id, nameId) {
+  if (!input.files[0]) return;
+  const file = input.files[0];
+  document.getElementById(nameId).textContent = file.name;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById(previewId).src = e.target.result;
+    document.getElementById(b64Id).value = e.target.result; // base64 completo
+  };
+  reader.readAsDataURL(file);
+}
+
+// ═══════════════════════════════════════
+// FORMACIONES — lista dinámica
+// ═══════════════════════════════════════
+let formaciones = [
+  { icono: '🧠', titulo: 'PNL aplicada a la salud', descripcion: 'Estrategias de Programación Neurolingüística para transformar patrones mentales y mejorar el bienestar físico y emocional.', emailContacto: 'carolina@gestion.en.salud', imagen: '' },
+  { icono: '🌿', titulo: 'Biodecodificación', descripcion: 'Exploramos el lenguaje del cuerpo y cómo los conflictos emocionales se manifiestan en síntomas físicos.', emailContacto: 'carolina@gestion.en.salud', imagen: '' },
+  { icono: '💪', titulo: 'Fibromialgia: caja de herramientas para salir adelante', descripcion: 'Un abordaje integral para entender y gestionar la fibromialgia, combinando estrategias prácticas de Terapia Ocupacional, PNL y Biodecodificación.', emailContacto: 'carolina@gestion.en.salud', imagen: '' }
+];
+let formImgs = {}; // index → base64
+
+function renderFormaciones() {
+  const list = document.getElementById('formaciones-admin-list');
+  list.innerHTML = formaciones.map((f, i) => `
+    <div class="formacion-item" id="fitem-${i}">
+      <button class="btn-remove" onclick="eliminarFormacion(${i})" title="Eliminar">✕</button>
+      <div class="formacion-header">
+        <div class="formacion-num">${i + 1}</div>
+        <h4>${f.titulo || 'Nueva formación'}</h4>
+      </div>
+      <div class="formacion-grid">
+        <div class="field">
+          <label>Ícono (emoji)</label>
+          <input type="text" value="${f.icono}" oninput="formaciones[${i}].icono=this.value" style="max-width:80px;" />
+        </div>
+        <div class="field">
+          <label>Email de contacto</label>
+          <input type="email" value="${f.emailContacto}" oninput="formaciones[${i}].emailContacto=this.value" />
+        </div>
+      </div>
+      <div class="field">
+        <label>Título</label>
+        <input type="text" value="${f.titulo}" oninput="formaciones[${i}].titulo=this.value; document.querySelector('#fitem-${i} h4').textContent=this.value||'Nueva formación'" />
+      </div>
+      <div class="field">
+        <label>Descripción</label>
+        <textarea oninput="formaciones[${i}].descripcion=this.value">${f.descripcion}</textarea>
+      </div>
+      <div class="field">
+        <label>Imagen de la formación (opcional)</label>
+        <div class="img-upload-wrap">
+          ${f.imagen ? `<img src="${f.imagen}" class="img-preview" style="width:80px;height:80px;" />` : `<div style="width:80px;height:80px;background:var(--gray);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:1.5rem;">📷</div>`}
+          <div>
+            <label class="upload-btn-label" for="upload-form-${i}">📁 Elegir imagen</label>
+            <input type="file" id="upload-form-${i}" accept="image/*" onchange="previewFormImg(this, ${i})" />
+            <p class="img-name" id="form-img-name-${i}">${f.imagen ? 'Imagen cargada' : 'Sin imagen'}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+  document.getElementById('dash-form-count').textContent = formaciones.length;
+}
+
+function previewFormImg(input, idx) {
+  if (!input.files[0]) return;
+  const file = input.files[0];
+  document.getElementById(`form-img-name-${idx}`).textContent = file.name;
+  const reader = new FileReader();
+  reader.onload = e => {
+    formaciones[idx].imagen = e.target.result;
+    formImgs[idx] = { b64: e.target.result, name: file.name };
+    renderFormaciones();
+  };
+  reader.readAsDataURL(file);
+}
+
+function agregarFormacion() {
+  formaciones.push({ icono: '📚', titulo: '', descripcion: '', emailContacto: 'carolina@gestion.en.salud', imagen: '' });
+  renderFormaciones();
+  document.getElementById(`fitem-${formaciones.length - 1}`).scrollIntoView({ behavior: 'smooth' });
+}
+
+function eliminarFormacion(idx) {
+  if (!confirm('¿Eliminar esta formación?')) return;
+  formaciones.splice(idx, 1);
+  renderFormaciones();
+}
+
+// ═══════════════════════════════════════
+// GITHUB CONFIG
+// ═══════════════════════════════════════
+function loadGitHubConfig() {
+  const cfg = JSON.parse(localStorage.getItem('gh_config') || '{}');
+  if (cfg.user)  document.getElementById('gh-user').value  = cfg.user;
+  if (cfg.repo)  document.getElementById('gh-repo').value  = cfg.repo;
+  if (cfg.token) document.getElementById('gh-token').value = cfg.token;
+  document.getElementById('dash-github-status').textContent = cfg.token ? '✅ OK' : '⚠️ Sin config';
+}
+
+function guardarGitHub() {
+  const cfg = {
+    user:  document.getElementById('gh-user').value.trim(),
+    repo:  document.getElementById('gh-repo').value.trim(),
+    token: document.getElementById('gh-token').value.trim()
+  };
+  if (!cfg.user || !cfg.repo || !cfg.token) {
+    setStatus('github', 'err', '⚠️ Completá todos los campos');
+    return;
+  }
+  localStorage.setItem('gh_config', JSON.stringify(cfg));
+  document.getElementById('dash-github-status').textContent = '✅ OK';
+  setStatus('github', 'ok', '✅ Configuración guardada en este dispositivo');
+}
+
+async function testGitHub() {
+  const cfg = JSON.parse(localStorage.getItem('gh_config') || '{}');
+  if (!cfg.token) { setStatus('github', 'err', '⚠️ Primero guardá la configuración'); return; }
+  setStatus('github', 'loading', '🔄 Probando conexión...');
+  try {
+    const r = await fetch(`https://api.github.com/repos/${cfg.user}/${cfg.repo}`, {
+      headers: { Authorization: `token ${cfg.token}`, Accept: 'application/vnd.github.v3+json' }
+    });
+    if (r.ok) { setStatus('github', 'ok', '✅ Conexión exitosa con GitHub'); }
+    else       { setStatus('github', 'err', `❌ Error ${r.status}: verificá usuario, repo o token`); }
+  } catch(e) { setStatus('github', 'err', '❌ Error de red. Verificá tu conexión.'); }
+}
+
+// ═══════════════════════════════════════
+// CARGAR CONTENT.JSON desde GitHub
+// ═══════════════════════════════════════
+async function loadContent() {
+  const cfg = JSON.parse(localStorage.getItem('gh_config') || '{}');
+  if (!cfg.token || !cfg.user || !cfg.repo) return;
+  try {
+    const r = await fetch(`https://api.github.com/repos/${cfg.user}/${cfg.repo}/contents/content.json`, {
+      headers: { Authorization: `token ${cfg.token}`, Accept: 'application/vnd.github.v3+json' }
+    });
+    if (!r.ok) return;
+    const data = await r.json();
+    const content = JSON.parse(atob(data.content));
+
+    // Quién soy
+    if (content.quienSoy) {
+      const qs = content.quienSoy;
+      if (qs.parrafo1) document.getElementById('qs-p1').value = qs.parrafo1;
+      if (qs.parrafo2) document.getElementById('qs-p2').value = qs.parrafo2;
+      if (qs.parrafo3) document.getElementById('qs-p3').value = qs.parrafo3;
+      if (qs.imagen)   document.getElementById('preview-qs-img').src = qs.imagen;
+    }
+    // Turnos
+    if (content.turnos) {
+      const t = content.turnos;
+      if (t.subtitulo)    document.getElementById('turnos-subtitulo').value = t.subtitulo;
+      if (t.titulo)       document.getElementById('turnos-titulo').value = t.titulo;
+      if (t.descripcion)  document.getElementById('turnos-desc').value = t.descripcion;
+      if (t.emailDestino) document.getElementById('turnos-email').value = t.emailDestino;
+    }
+    // Formaciones
+    if (content.formaciones) {
+      formaciones = content.formaciones;
+      renderFormaciones();
+    }
+  } catch(e) { /* silencioso, usa defaults */ }
+}
+
+// ═══════════════════════════════════════
+// GUARDAR EN GITHUB
+// ═══════════════════════════════════════
+async function guardarSeccion(seccion) {
+  const cfg = JSON.parse(localStorage.getItem('gh_config') || '{}');
+  if (!cfg.token || !cfg.user || !cfg.repo) {
+    alert('⚠️ Primero configurá GitHub en la sección ⚙️ Configuración.');
+    return;
+  }
+
+  setStatus(seccion, 'loading', '🔄 Guardando...');
+
+  // Construir el JSON de contenido
+  const content = await getContentJSON();
+
+  try {
+    // 1. Obtener SHA del archivo actual
+    const rGet = await fetch(`https://api.github.com/repos/${cfg.user}/${cfg.repo}/contents/content.json`, {
+      headers: { Authorization: `token ${cfg.token}`, Accept: 'application/vnd.github.v3+json' }
+    });
+    const sha = rGet.ok ? (await rGet.json()).sha : undefined;
+
+    // 2. Guardar content.json
+    const body = {
+      message: `Admin: actualiza sección "${seccion}"`,
+      content: btoa(unescape(encodeURIComponent(JSON.stringify(content, null, 2)))),
+      ...(sha && { sha })
+    };
+    const rPut = await fetch(`https://api.github.com/repos/${cfg.user}/${cfg.repo}/contents/content.json`, {
+      method: 'PUT', headers: { Authorization: `token ${cfg.token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (!rPut.ok) throw new Error(`HTTP ${rPut.status}`);
+
+    // 3. Si hay imagen nueva en quién soy, subirla
+    if (seccion === 'quienSoy') {
+      const b64 = document.getElementById('qs-img-b64').value;
+      if (b64) await subirImagen(cfg, b64, 'assets/foto-carolina.jpg');
+    }
+
+    // 4. Imágenes de formaciones
+    if (seccion === 'formaciones') {
+      for (const [idx, imgData] of Object.entries(formImgs)) {
+        const fname = `assets/formacion-${idx}-${Date.now()}.jpg`;
+        await subirImagen(cfg, imgData.b64, fname);
+      }
+    }
+
+    setStatus(seccion, 'ok', '✅ ¡Guardado! El sitio se actualiza en 1-2 minutos.');
+  } catch(e) {
+    setStatus(seccion, 'err', `❌ Error: ${e.message}`);
+  }
+}
+
+async function subirImagen(cfg, b64full, path) {
+  const b64 = b64full.includes(',') ? b64full.split(',')[1] : b64full;
+  const rGet = await fetch(`https://api.github.com/repos/${cfg.user}/${cfg.repo}/contents/${path}`, {
+    headers: { Authorization: `token ${cfg.token}`, Accept: 'application/vnd.github.v3+json' }
+  });
+  const sha = rGet.ok ? (await rGet.json()).sha : undefined;
+  await fetch(`https://api.github.com/repos/${cfg.user}/${cfg.repo}/contents/${path}`, {
+    method: 'PUT',
+    headers: { Authorization: `token ${cfg.token}`, Accept: 'application/vnd.github.v3+json', 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message: `Admin: sube imagen ${path}`, content: b64, ...(sha && { sha }) })
+  });
+}
+
+function getContentJSON() {
+  const content = {
+    quienSoy: {
+      parrafo1: document.getElementById('qs-p1').value,
+      parrafo2: document.getElementById('qs-p2').value,
+      parrafo3: document.getElementById('qs-p3').value,
+      imagen: document.getElementById('qs-img-b64').value
+              ? 'assets/foto-carolina.jpg'
+              : document.getElementById('preview-qs-img').src
+    },
+    turnos: {
+      subtitulo:    document.getElementById('turnos-subtitulo').value,
+      titulo:       document.getElementById('turnos-titulo').value,
+      descripcion:  document.getElementById('turnos-desc').value,
+      emailDestino: document.getElementById('turnos-email').value
+    },
+    formaciones: formaciones
+  };
+  return content;
+}
+
+// ═══════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════
+function setStatus(id, type, msg) {
+  const el = document.getElementById('status-' + id);
+  el.textContent = msg;
+  el.className = 'save-status ' + type;
+}
+
+// Init
+renderFormaciones();
+</script>
+</body>
+</html>
