@@ -1,15 +1,22 @@
 {
+  "hero": {
+    "eyebrow": "Terapia Ocupacional · PNL · Biodecodificación",
+    "titulo": "Hola, soy <em>Carolina</em><br>Amuchastegui",
+    "tagline": "Acompañarte a pasar del dolor crónico a una vida plena es mi propósito.<br>Herramientas concretas, ciencia aplicada y un espacio de transformación real.",
+    "imagen": "assets/foto-carolina.jpg"
+  },
   "quienSoy": {
     "parrafo1": "Soy Licenciada en Terapia Ocupacional con formación en Programación Neurolingüística (PNL) y Biodecodificación. Me especializo en el abordaje integral del dolor crónico y en ayudarte a recuperar tu calidad de vida.",
     "parrafo2": "Mi enfoque combina la evidencia científica de la Terapia Ocupacional con herramientas de transformación mental y emocional, brindándote un camino personalizado hacia el bienestar.",
     "parrafo3": "A través de sesiones individuales, formaciones y mi libro, comparto estrategias que podés aplicar en tu vida cotidiana para reducir limitaciones y potenciar tu autonomía.",
-    "imagen": "assets/foto-carolina.jpg"
+    "imagen": "assets/foto-carolina.jpg",
+    "fotoPosition": "center center"
   },
   "turnos": {
     "subtitulo": "Agenda online",
     "titulo": "Pedí tu turno",
-    "descripcion": "Completá el formulario y te confirmo disponibilidad. Las sesiones son individuales, pueden ser online o presenciales.",
-    "emailDestino": "lic.amuchastegui@gmail.com"
+    "descripcion": "Completá el formulario y te confirmo disponibilidad en menos de 24 horas. Las sesiones son individuales, online o presenciales.",
+    "emailDestino": "carolina@gestion.en.salud"
   },
   "formaciones": [
     {
@@ -32,6 +39,30 @@
       "descripcion": "Un abordaje integral para entender y gestionar la fibromialgia, combinando estrategias prácticas de Terapia Ocupacional, PNL y Biodecodificación.",
       "emailContacto": "carolina@gestion.en.salud",
       "imagen": ""
+    }
+  ],
+  "libro": {
+    "p1": "Una guía teórico-práctica para disminuir el dolor crónico combinando estrategias de Terapia Ocupacional y Programación Neurolingüística.",
+    "p2": "Disponible como eBook en Amazon Kindle. Llevá el conocimiento en tu celular o tablet y empezá a aplicar las herramientas cuando y donde quieras.",
+    "precio": "eBook $14.99 USD",
+    "link": "https://www.amazon.com/-/es/dp/B0GYF6ZF5Q/ref=tmm_kin_swatch_0"
+  },
+  "comunidad": {
+    "titulo": "Sumate a mi comunidad<br>de <em>WhatsApp</em>",
+    "desc": "Un espacio para compartir recursos, consejos de bienestar, novedades de cursos y mucho más. Gratuita y sin spam."
+  },
+  "asociaciones": [
+    {
+      "icono": "🏛️",
+      "nombre": "Terapia Ocupacional Argentina",
+      "descripcion": "Asociación nacional de referencia para profesionales de Terapia Ocupacional en Argentina.",
+      "url": "https://terapia-ocupacional.org.ar/"
+    },
+    {
+      "icono": "📸",
+      "nombre": "ATOPBA",
+      "descripcion": "Asociación de Terapistas Ocupacionales de la Provincia de Buenos Aires.",
+      "url": "https://www.instagram.com/atopbaok/?hl=es"
     }
   ]
 }

@@ -250,6 +250,14 @@
     }
     .alert strong { color: var(--teal); }
 
+    .pos-btn {
+      width: 60px; height: 60px; border-radius: 6px;
+      border: 1.5px solid var(--gray); background: var(--white);
+      font-size: 1.1rem; cursor: pointer; transition: all 0.15s;
+    }
+    .pos-btn:hover { background: var(--teal-light); border-color: var(--teal); }
+    .pos-btn.active { background: var(--teal); color: var(--white); border-color: var(--teal); }
+
     @media (max-width: 700px) {
       .layout { grid-template-columns: 1fr; }
       aside { display: none; }
@@ -307,6 +315,18 @@
       </div>
       <div class="nav-item" onclick="showPage('formaciones')">
         <span class="icon">📚</span> Formaciones
+      </div>
+      <div class="nav-item" onclick="showPage('libro')">
+        <span class="icon">📖</span> Libro
+      </div>
+      <div class="nav-item" onclick="showPage('comunidad')">
+        <span class="icon">💬</span> Comunidad
+      </div>
+      <div class="nav-item" onclick="showPage('hero')">
+        <span class="icon">🖼️</span> Portada (Home)
+      </div>
+      <div class="nav-item" onclick="showPage('asociaciones')">
+        <span class="icon">🏛️</span> Asociaciones
       </div>
       <p class="sidebar-label">Configuración</p>
       <div class="nav-item" onclick="showPage('github-config')">
@@ -372,7 +392,7 @@
         <div class="card">
           <h3>📷 Foto de perfil</h3>
           <div class="img-upload-wrap">
-            <img id="preview-qs-img" src="https://linktr.ee/og/image/CaroAmuchastegui.jpg" class="img-preview" alt="Foto de perfil" />
+            <img id="preview-qs-img" src="assets/foto-carolina.jpg" class="img-preview" alt="Foto de perfil" />
             <div class="img-upload-controls">
               <p>Subí una foto tuya. Tamaño recomendado: <strong>600 x 600 px</strong> o más. Se puede usar formato JPG o PNG.</p>
               <label class="upload-btn-label" for="upload-qs-img">📁 Elegir foto</label>
@@ -397,6 +417,27 @@
           <div class="field">
             <label>Párrafo 3</label>
             <textarea id="qs-p3">A través de sesiones individuales, formaciones y mi libro, comparto estrategias que podés aplicar en tu vida cotidiana para reducir limitaciones y potenciar tu autonomía.</textarea>
+          </div>
+          <div class="field" style="margin-top:1.5rem;">
+            <label>Posición de la foto (arriba/abajo – izquierda/derecha)</label>
+            <p class="field-hint" style="margin-bottom:1rem;">Usá los botones para centrar la foto como mejor quede.</p>
+            <div style="display:grid; grid-template-columns:repeat(3,60px); gap:6px; width:fit-content;">
+              <button class="pos-btn" onclick="setFotoPos('left top')">↖</button>
+              <button class="pos-btn" onclick="setFotoPos('center top')">↑</button>
+              <button class="pos-btn" onclick="setFotoPos('right top')">↗</button>
+              <button class="pos-btn" onclick="setFotoPos('left center')">←</button>
+              <button class="pos-btn active" id="pos-center" onclick="setFotoPos('center center')">⊙</button>
+              <button class="pos-btn" onclick="setFotoPos('right center')">→</button>
+              <button class="pos-btn" onclick="setFotoPos('left bottom')">↙</button>
+              <button class="pos-btn" onclick="setFotoPos('center bottom')">↓</button>
+              <button class="pos-btn" onclick="setFotoPos('right bottom')">↘</button>
+            </div>
+            <p class="field-hint" style="margin-top:0.8rem;">Posición actual: <strong id="pos-label">center center</strong></p>
+            <input type="hidden" id="qs-foto-position" value="center center" />
+            <div style="margin-top:1rem;">
+              <p class="field-hint" style="margin-bottom:0.5rem;">Previsualización:</p>
+              <img id="preview-qs-pos" src="assets/foto-carolina.jpg" style="width:180px; height:220px; object-fit:cover; object-position:center center; border-radius:6px; border:2px solid var(--gray);" />
+            </div>
           </div>
           <div class="save-bar">
             <button class="btn-save" onclick="guardarSeccion('quienSoy')">💾 Guardar cambios</button>
@@ -454,6 +495,120 @@
           <div class="save-bar">
             <button class="btn-save" onclick="guardarSeccion('formaciones')">💾 Guardar cambios</button>
             <span class="save-status" id="status-formaciones"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── HERO / PORTADA ── -->
+      <div class="page" id="page-hero">
+        <div class="page-header">
+          <h2>🖼️ Portada (Home)</h2>
+          <p>Editá el texto y la imagen de fondo que aparecen en la pantalla principal del sitio.</p>
+        </div>
+        <div class="card">
+          <h3>🖼️ Imagen de fondo</h3>
+          <div class="img-upload-wrap">
+            <img id="preview-hero-img" src="assets/foto-carolina.jpg" class="img-preview" alt="Imagen de fondo" style="width:200px; height:120px; object-fit:cover;" />
+            <div class="img-upload-controls">
+              <p>Esta imagen aparece como fondo semitransparente en la pantalla de inicio. Recomendado: foto horizontal, mínimo <strong>1200 x 800 px</strong>.</p>
+              <label class="upload-btn-label" for="upload-hero-img">📁 Elegir imagen</label>
+              <input type="file" id="upload-hero-img" accept="image/*" onchange="previewImg(this, 'preview-hero-img', 'hero-img-b64', 'hero-img-name')" />
+              <p class="img-name" id="hero-img-name">Ningún archivo seleccionado</p>
+            </div>
+          </div>
+          <input type="hidden" id="hero-img-b64" />
+        </div>
+        <div class="card">
+          <h3>✏️ Textos de la portada</h3>
+          <div class="field">
+            <label>Subtítulo (texto pequeño arriba del nombre)</label>
+            <input type="text" id="hero-eyebrow" value="Terapia Ocupacional · PNL · Biodecodificación" />
+          </div>
+          <div class="field">
+            <label>Título principal</label>
+            <input type="text" id="hero-titulo" value="Hola, soy Carolina Amuchastegui" />
+            <p class="field-hint">El nombre "Carolina" aparece destacado automáticamente.</p>
+          </div>
+          <div class="field">
+            <label>Frase descriptiva</label>
+            <textarea id="hero-tagline">Acompañarte a pasar del dolor crónico a una vida plena es mi propósito. Herramientas concretas, ciencia aplicada y un espacio de transformación real.</textarea>
+          </div>
+          <div class="save-bar">
+            <button class="btn-save" onclick="guardarSeccion('hero')">💾 Guardar cambios</button>
+            <span class="save-status" id="status-hero"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── LIBRO ── -->
+      <div class="page" id="page-libro">
+        <div class="page-header">
+          <h2>📖 Libro</h2>
+          <p>Editá los textos y el link de compra de tu libro.</p>
+        </div>
+        <div class="card">
+          <h3>✏️ Contenido de la sección</h3>
+          <div class="field">
+            <label>Descripción (párrafo 1)</label>
+            <textarea id="libro-p1">Una guía teórico-práctica para disminuir el dolor crónico combinando estrategias de Terapia Ocupacional y Programación Neurolingüística.</textarea>
+          </div>
+          <div class="field">
+            <label>Descripción (párrafo 2)</label>
+            <textarea id="libro-p2">Disponible como eBook en Amazon Kindle. Llevá el conocimiento en tu celular o tablet y empezá a aplicar las herramientas cuando y donde quieras.</textarea>
+          </div>
+          <div class="field">
+            <label>Precio (ej: eBook $14.99 USD)</label>
+            <input type="text" id="libro-precio" value="eBook $14.99 USD" />
+          </div>
+          <div class="field">
+            <label>Link de compra (Amazon)</label>
+            <input type="text" id="libro-link" value="https://www.amazon.com/-/es/dp/B0GYF6ZF5Q/ref=tmm_kin_swatch_0" />
+          </div>
+          <div class="save-bar">
+            <button class="btn-save" onclick="guardarSeccion('libro')">💾 Guardar cambios</button>
+            <span class="save-status" id="status-libro"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── COMUNIDAD ── -->
+      <div class="page" id="page-comunidad">
+        <div class="page-header">
+          <h2>💬 Comunidad WhatsApp</h2>
+          <p>Editá el texto de la sección de comunidad de WhatsApp.</p>
+        </div>
+        <div class="card">
+          <h3>✏️ Textos de la sección</h3>
+          <div class="field">
+            <label>Título</label>
+            <input type="text" id="comunidad-titulo" value="Sumate a mi comunidad de WhatsApp" />
+          </div>
+          <div class="field">
+            <label>Descripción</label>
+            <textarea id="comunidad-desc">Un espacio para compartir recursos, consejos de bienestar, novedades de cursos y mucho más. Gratuita y sin spam.</textarea>
+          </div>
+          <div class="save-bar">
+            <button class="btn-save" onclick="guardarSeccion('comunidad')">💾 Guardar cambios</button>
+            <span class="save-status" id="status-comunidad"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ASOCIACIONES ── -->
+      <div class="page" id="page-asociaciones">
+        <div class="page-header">
+          <h2>🏛️ Asociaciones</h2>
+          <p>Agregá, editá o eliminá asociaciones de Terapia Ocupacional.</p>
+        </div>
+        <div class="card">
+          <h3>📋 Lista de asociaciones</h3>
+          <div id="asociaciones-admin-list"></div>
+          <button class="btn-add-formacion" onclick="agregarAsociacion()">
+            ➕ Agregar asociación
+          </button>
+          <div class="save-bar">
+            <button class="btn-save" onclick="guardarSeccion('asociaciones')">💾 Guardar cambios</button>
+            <span class="save-status" id="status-asociaciones"></span>
           </div>
         </div>
       </div>
@@ -639,6 +794,70 @@ function eliminarFormacion(idx) {
 }
 
 // ═══════════════════════════════════════
+// POSICIÓN DE FOTO
+// ═══════════════════════════════════════
+function setFotoPos(pos) {
+  document.getElementById('qs-foto-position').value = pos;
+  document.getElementById('pos-label').textContent = pos;
+  document.getElementById('preview-qs-pos').style.objectPosition = pos;
+  const src = document.getElementById('preview-qs-img').src;
+  document.getElementById('preview-qs-pos').src = src;
+  document.querySelectorAll('.pos-btn').forEach(b => b.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+}
+
+// ═══════════════════════════════════════
+// ASOCIACIONES — lista dinámica
+// ═══════════════════════════════════════
+let asociaciones = [
+  { icono: '🏛️', nombre: 'Terapia Ocupacional Argentina', descripcion: 'Asociación nacional de referencia para profesionales de Terapia Ocupacional en Argentina.', url: 'https://terapia-ocupacional.org.ar/' },
+  { icono: '📸', nombre: 'ATOPBA', descripcion: 'Asociación de Terapistas Ocupacionales de la Provincia de Buenos Aires.', url: 'https://www.instagram.com/atopbaok/?hl=es' }
+];
+
+function renderAsociaciones() {
+  const list = document.getElementById('asociaciones-admin-list');
+  list.innerHTML = asociaciones.map((a, i) => `
+    <div class="formacion-item" id="aitem-${i}">
+      <button class="btn-remove" onclick="eliminarAsociacion(${i})" title="Eliminar">✕</button>
+      <div class="formacion-header">
+        <div class="formacion-num">${i + 1}</div>
+        <h4>${a.nombre || 'Nueva asociación'}</h4>
+      </div>
+      <div class="formacion-grid">
+        <div class="field">
+          <label>Ícono (emoji)</label>
+          <input type="text" value="${a.icono}" oninput="asociaciones[${i}].icono=this.value" style="max-width:80px;" />
+        </div>
+        <div class="field">
+          <label>Link / URL</label>
+          <input type="text" value="${a.url}" oninput="asociaciones[${i}].url=this.value" placeholder="https://..." />
+        </div>
+      </div>
+      <div class="field">
+        <label>Nombre de la asociación</label>
+        <input type="text" value="${a.nombre}" oninput="asociaciones[${i}].nombre=this.value; document.querySelector('#aitem-${i} h4').textContent=this.value||'Nueva asociación'" />
+      </div>
+      <div class="field">
+        <label>Descripción breve</label>
+        <textarea oninput="asociaciones[${i}].descripcion=this.value">${a.descripcion}</textarea>
+      </div>
+    </div>
+  `).join('');
+}
+
+function agregarAsociacion() {
+  asociaciones.push({ icono: '🏛️', nombre: '', descripcion: '', url: '' });
+  renderAsociaciones();
+  document.getElementById(`aitem-${asociaciones.length - 1}`).scrollIntoView({ behavior: 'smooth' });
+}
+
+function eliminarAsociacion(idx) {
+  if (!confirm('¿Eliminar esta asociación?')) return;
+  asociaciones.splice(idx, 1);
+  renderAsociaciones();
+}
+
+// ═══════════════════════════════════════
 // GITHUB CONFIG
 // ═══════════════════════════════════════
 function loadGitHubConfig() {
@@ -707,10 +926,44 @@ async function loadContent() {
       if (t.descripcion)  document.getElementById('turnos-desc').value = t.descripcion;
       if (t.emailDestino) document.getElementById('turnos-email').value = t.emailDestino;
     }
+    // Hero
+    if (content.hero) {
+      const h = content.hero;
+      if (h.eyebrow) document.getElementById('hero-eyebrow').value = h.eyebrow;
+      if (h.titulo)  document.getElementById('hero-titulo').value = h.titulo.replace(/<[^>]+>/g, '');
+      if (h.tagline) document.getElementById('hero-tagline').value = h.tagline.replace(/<br>/g, '\n').replace(/<[^>]+>/g, '');
+      if (h.imagen)  document.getElementById('preview-hero-img').src = h.imagen;
+    }
     // Formaciones
     if (content.formaciones) {
       formaciones = content.formaciones;
       renderFormaciones();
+    }
+    // Libro
+    if (content.libro) {
+      const l = content.libro;
+      if (l.p1)     document.getElementById('libro-p1').value = l.p1;
+      if (l.p2)     document.getElementById('libro-p2').value = l.p2;
+      if (l.precio) document.getElementById('libro-precio').value = l.precio;
+      if (l.link)   document.getElementById('libro-link').value = l.link;
+    }
+    // Comunidad
+    if (content.comunidad) {
+      const com = content.comunidad;
+      if (com.titulo) document.getElementById('comunidad-titulo').value = com.titulo.replace(/<[^>]+>/g, '');
+      if (com.desc)   document.getElementById('comunidad-desc').value = com.desc;
+    }
+    // Asociaciones
+    if (content.asociaciones) {
+      asociaciones = content.asociaciones;
+      renderAsociaciones();
+    }
+    // Posición foto
+    if (content.quienSoy?.fotoPosition) {
+      const pos = content.quienSoy.fotoPosition;
+      document.getElementById('qs-foto-position').value = pos;
+      document.getElementById('pos-label').textContent = pos;
+      document.getElementById('preview-qs-pos').style.objectPosition = pos;
     }
   } catch(e) { /* silencioso, usa defaults */ }
 }
@@ -755,6 +1008,12 @@ async function guardarSeccion(seccion) {
       if (b64) await subirImagen(cfg, b64, 'assets/foto-carolina.jpg');
     }
 
+    // Si hay imagen nueva de hero, subirla
+    if (seccion === 'hero') {
+      const b64 = document.getElementById('hero-img-b64').value;
+      if (b64) await subirImagen(cfg, b64, 'assets/hero-bg.jpg');
+    }
+
     // 4. Imágenes de formaciones
     if (seccion === 'formaciones') {
       for (const [idx, imgData] of Object.entries(formImgs)) {
@@ -784,13 +1043,18 @@ async function subirImagen(cfg, b64full, path) {
 
 function getContentJSON() {
   const content = {
+    hero: {
+      eyebrow: document.getElementById('hero-eyebrow').value,
+      titulo:  document.getElementById('hero-titulo').value,
+      tagline: document.getElementById('hero-tagline').value,
+      imagen:  document.getElementById('hero-img-b64').value ? 'assets/hero-bg.jpg' : 'assets/foto-carolina.jpg'
+    },
     quienSoy: {
-      parrafo1: document.getElementById('qs-p1').value,
-      parrafo2: document.getElementById('qs-p2').value,
-      parrafo3: document.getElementById('qs-p3').value,
-      imagen: document.getElementById('qs-img-b64').value
-              ? 'assets/foto-carolina.jpg'
-              : document.getElementById('preview-qs-img').src
+      parrafo1:     document.getElementById('qs-p1').value,
+      parrafo2:     document.getElementById('qs-p2').value,
+      parrafo3:     document.getElementById('qs-p3').value,
+      imagen:       document.getElementById('qs-img-b64').value ? 'assets/foto-carolina.jpg' : document.getElementById('preview-qs-img').src,
+      fotoPosition: document.getElementById('qs-foto-position').value
     },
     turnos: {
       subtitulo:    document.getElementById('turnos-subtitulo').value,
@@ -798,7 +1062,18 @@ function getContentJSON() {
       descripcion:  document.getElementById('turnos-desc').value,
       emailDestino: document.getElementById('turnos-email').value
     },
-    formaciones: formaciones
+    formaciones: formaciones,
+    libro: {
+      p1:     document.getElementById('libro-p1').value,
+      p2:     document.getElementById('libro-p2').value,
+      precio: document.getElementById('libro-precio').value,
+      link:   document.getElementById('libro-link').value
+    },
+    comunidad: {
+      titulo: document.getElementById('comunidad-titulo').value,
+      desc:   document.getElementById('comunidad-desc').value
+    },
+    asociaciones: asociaciones
   };
   return content;
 }
@@ -814,6 +1089,7 @@ function setStatus(id, type, msg) {
 
 // Init
 renderFormaciones();
+renderAsociaciones();
 </script>
 </body>
 </html>

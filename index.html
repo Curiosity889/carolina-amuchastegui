@@ -75,7 +75,7 @@
     }
     .hero-bg {
       position: absolute; inset: 0;
-      background: url('https://linktr.ee/og/image/CaroAmuchastegui.jpg') center/cover no-repeat;
+      background: url('assets/foto-carolina.jpg') center/cover no-repeat;
       opacity: 0.18;
     }
     .hero-gradient {
@@ -351,6 +351,7 @@
     <li><a href="#formaciones" onclick="this.closest('.nav-links').classList.remove('open')">Formaciones</a></li>
     <li><a href="#libro" onclick="this.closest('.nav-links').classList.remove('open')">Libro</a></li>
     <li><a href="#comunidad" onclick="this.closest('.nav-links').classList.remove('open')">Comunidad</a></li>
+    <li><a href="#asociaciones" onclick="this.closest('.nav-links').classList.remove('open')">Asociaciones</a></li>
     <li><a href="#redes" onclick="this.closest('.nav-links').classList.remove('open')">Redes</a></li>
   </ul>
 </nav>
@@ -360,9 +361,9 @@
   <div class="hero-bg"></div>
   <div class="hero-gradient"></div>
   <div class="hero-content">
-    <p class="hero-eyebrow">Terapia Ocupacional · PNL · Biodecodificación</p>
-    <h1 class="hero-name">Hola, soy <em>Carolina</em><br>Amuchastegui</h1>
-    <p class="hero-tagline">
+    <p class="hero-eyebrow" id="hero-eyebrow">Terapia Ocupacional · PNL · Biodecodificación</p>
+    <h1 class="hero-name" id="hero-titulo">Hola, soy <em>Carolina</em><br>Amuchastegui</h1>
+    <p class="hero-tagline" id="hero-tagline">
       Acompañarte a pasar del dolor crónico a una vida plena es mi propósito.<br>
       Herramientas concretas, ciencia aplicada y un espacio de transformación real.
     </p>
@@ -402,7 +403,7 @@
         </div>
       </div>
       <div class="quien-img-wrap">
-        <img id="qs-img" src="https://linktr.ee/og/image/CaroAmuchastegui.jpg" alt="Lic. Carolina Amuchastegui" />
+        <img id="qs-img" src="assets/foto-carolina.jpg" alt="Lic. Carolina Amuchastegui" style="object-fit:cover; width:100%; height:420px;" />
         <div class="quien-img-accent"></div>
       </div>
     </div>
@@ -544,15 +545,15 @@
       </div>
       <div>
         <p class="section-label">Mi libro</p>
-        <h2 class="section-title">Del dolor crónico a la <em>calidad de vida</em></h2>
+        <h2 class="section-title" id="libro-titulo">Del dolor crónico a la <em>calidad de vida</em></h2>
         <div class="section-body">
-          <p>Una guía teórico-práctica para disminuir el dolor crónico combinando estrategias de Terapia Ocupacional y Programación Neurolingüística.</p>
+          <p id="libro-p1">Una guía teórico-práctica para disminuir el dolor crónico combinando estrategias de Terapia Ocupacional y Programación Neurolingüística.</p>
           <br>
-          <p>Disponible como eBook en Amazon Kindle. Llevá el conocimiento en tu celular o tablet y empezá a aplicar las herramientas cuando y donde quieras.</p>
+          <p id="libro-p2">Disponible como eBook en Amazon Kindle. Llevá el conocimiento en tu celular o tablet y empezá a aplicar las herramientas cuando y donde quieras.</p>
         </div>
         <div style="margin-top:1.8rem; display:flex; gap:1rem; flex-wrap:wrap; align-items:center;">
-          <span class="libro-price">eBook $14.99 USD</span>
-          <a href="https://www.amazon.com/-/es/dp/B0GYF6ZF5Q/ref=tmm_kin_swatch_0" target="_blank" class="btn btn-primary">Comprar en Amazon →</a>
+          <span class="libro-price" id="libro-precio">eBook $14.99 USD</span>
+          <a id="libro-link" href="https://www.amazon.com/-/es/dp/B0GYF6ZF5Q/ref=tmm_kin_swatch_0" target="_blank" class="btn btn-primary">Comprar en Amazon →</a>
         </div>
       </div>
     </div>
@@ -569,9 +570,9 @@
 <!-- ── COMUNIDAD WHATSAPP ── -->
 <section id="comunidad">
   <div class="container">
-    <p class="section-label">Comunidad gratuita</p>
-    <h2 class="section-title">Sumate a mi comunidad<br>de <em>WhatsApp</em></h2>
-    <p class="section-body">Un espacio para compartir recursos, consejos de bienestar, novedades de cursos y mucho más. Gratuita y sin spam.</p>
+    <p class="section-label" id="comunidad-label">Comunidad gratuita</p>
+    <h2 class="section-title" id="comunidad-titulo">Sumate a mi comunidad<br>de <em>WhatsApp</em></h2>
+    <p class="section-body" id="comunidad-desc">Un espacio para compartir recursos, consejos de bienestar, novedades de cursos y mucho más. Gratuita y sin spam.</p>
     <a href="https://chat.whatsapp.com/LTONBPb26mb4EH1XUqhRwA" target="_blank" class="whatsapp-btn">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
@@ -585,6 +586,36 @@
 <div class="wave" style="background:#1A4D5C;">
   <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" height="60">
     <path d="M0,20 C720,60 720,0 1440,30 L1440,60 L0,60 Z" fill="#1C2B30"/>
+  </svg>
+</div>
+
+<!-- ── ASOCIACIONES ── -->
+<section id="asociaciones" style="background:#EDE8DA;">
+  <div class="container">
+    <p class="section-label">Red de instituciones</p>
+    <h2 class="section-title">Asociaciones de <em>Terapia Ocupacional</em></h2>
+    <p class="section-body" style="margin-bottom:2rem;">Instituciones y organizaciones vinculadas a la Terapia Ocupacional con las que trabajo o recomiendo.</p>
+    <div class="card-grid" id="asociaciones-grid">
+      <a href="https://terapia-ocupacional.org.ar/" target="_blank" class="card" style="text-decoration:none; display:block;">
+        <div class="card-icon">🏛️</div>
+        <h3>Terapia Ocupacional Argentina</h3>
+        <p>Asociación nacional de referencia para profesionales de Terapia Ocupacional en Argentina.</p>
+        <span class="card-link">Visitar sitio →</span>
+      </a>
+      <a href="https://www.instagram.com/atopbaok/?hl=es" target="_blank" class="card" style="text-decoration:none; display:block;">
+        <div class="card-icon">📸</div>
+        <h3>ATOPBA</h3>
+        <p>Asociación de Terapistas Ocupacionales de la Provincia de Buenos Aires.</p>
+        <span class="card-link">Ver en Instagram →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- wave -->
+<div class="wave" style="background:#EDE8DA;">
+  <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" height="60">
+    <path d="M0,20 C400,60 1000,0 1440,30 L1440,60 L0,60 Z" fill="#1C2B30"/>
   </svg>
 </div>
 
@@ -658,6 +689,50 @@
             <a href="mailto:${f.emailContacto || 'carolina@gestion.en.salud'}" class="card-link">Pedir más info →</a>
           </div>`).join('');
       }
+
+      // HERO
+      const h = c.hero;
+      if (h) {
+        if (h.eyebrow) document.getElementById('hero-eyebrow').textContent = h.eyebrow;
+        if (h.titulo)  document.getElementById('hero-titulo').innerHTML = h.titulo;
+        if (h.tagline) document.getElementById('hero-tagline').innerHTML = h.tagline;
+        if (h.imagen)  document.querySelector('.hero-bg').style.backgroundImage = `url('${h.imagen}')`;
+      }
+
+      // LIBRO
+      const l = c.libro;
+      if (l) {
+        if (l.p1)     document.getElementById('libro-p1').textContent = l.p1;
+        if (l.p2)     document.getElementById('libro-p2').textContent = l.p2;
+        if (l.precio) document.getElementById('libro-precio').textContent = l.precio;
+        if (l.link)   document.getElementById('libro-link').href = l.link;
+      }
+
+      // COMUNIDAD
+      const com = c.comunidad;
+      if (com) {
+        if (com.titulo) document.getElementById('comunidad-titulo').innerHTML = com.titulo;
+        if (com.desc)   document.getElementById('comunidad-desc').textContent = com.desc;
+      }
+
+      // ASOCIACIONES
+      const asoc = c.asociaciones;
+      if (asoc && asoc.length) {
+        const grid = document.getElementById('asociaciones-grid');
+        grid.innerHTML = asoc.map(a => `
+          <a href="${a.url}" target="_blank" class="card" style="text-decoration:none; display:block;">
+            <div class="card-icon">${a.icono || '🏛️'}</div>
+            <h3>${a.nombre}</h3>
+            <p>${a.descripcion}</p>
+            <span class="card-link">Visitar →</span>
+          </a>`).join('');
+      }
+
+      // QUIEN SOY — posición de foto
+      if (c.quienSoy && c.quienSoy.fotoPosition) {
+        document.getElementById('qs-img').style.objectPosition = c.quienSoy.fotoPosition;
+      }
+
     } catch(e) { console.log('content.json no disponible, usando contenido por defecto'); }
   }
   cargarContenido();
