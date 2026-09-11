@@ -1,6 +1,5 @@
 {
   "quienSoy": {
-    "titulo": "Lic. Carolina Amuchastegui",
     "parrafo1": "Soy Licenciada en Terapia Ocupacional con formación en Programación Neurolingüística (PNL) y Biodecodificación. Me especializo en el abordaje integral del dolor crónico y en ayudarte a recuperar tu calidad de vida.",
     "parrafo2": "Mi enfoque combina la evidencia científica de la Terapia Ocupacional con herramientas de transformación mental y emocional, brindándote un camino personalizado hacia el bienestar.",
     "parrafo3": "A través de sesiones individuales, formaciones y mi libro, comparto estrategias que podés aplicar en tu vida cotidiana para reducir limitaciones y potenciar tu autonomía.",
@@ -9,8 +8,8 @@
   "turnos": {
     "subtitulo": "Agenda online",
     "titulo": "Pedí tu turno",
-    "descripcion": "Completá el formulario y te confirmo disponibilidad en menos de 24 horas. Las sesiones son individuales, online o presenciales.",
-    "emailDestino": "carolina@gestion.en.salud"
+    "descripcion": "Completá el formulario y te confirmo disponibilidad. Las sesiones son individuales, pueden ser online o presenciales.",
+    "emailDestino": "lic.amuchastegui@gmail.com"
   },
   "formaciones": [
     {
