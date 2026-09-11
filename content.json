@@ -1,67 +1,67 @@
 {
   "hero": {
-    "eyebrow": "Terapia Ocupacional Â· PNL Â· BiodecodificaciÃ³n",
-    "titulo": "Hola, soy CarolinaAmuchastegui",
-    "tagline": "AcompaÃ±arte a pasar del dolor crÃ³nico a una vida plena es mi propÃ³sito.\nHerramientas concretas, ciencia aplicada y un espacio de transformaciÃ³n real.",
+    "eyebrow": "Terapia Ocupacional · PNL · Biodecodificación",
+    "titulo": "Hola, soy <em>Carolina</em><br>Amuchastegui",
+    "tagline": "Acompañarte a pasar del dolor crónico a una vida plena es mi propósito.<br>Herramientas concretas, ciencia aplicada y un espacio de transformación real.",
     "imagen": "assets/foto-carolina.jpg"
   },
   "quienSoy": {
-    "parrafo1": "Soy Licenciada en Terapia Ocupacional con formaciÃ³n en ProgramaciÃ³n NeurolingÃ¼Ã­stica (PNL) y BiodecodificaciÃ³n. Me especializo en el abordaje integral del dolor crÃ³nico y en ayudarte a recuperar tu calidad de vida.",
-    "parrafo2": "Mi enfoque combina la evidencia cientÃ­fica de la Terapia Ocupacional con herramientas de transformaciÃ³n mental y emocional, brindÃ¡ndote un camino personalizado hacia el bienestar.",
-    "parrafo3": "A travÃ©s de sesiones individuales, formaciones y mi libro, comparto estrategias que podÃ©s aplicar en tu vida cotidiana para reducir limitaciones y potenciar tu autonomÃ­a.",
-    "imagen": "https://caroamuchastegui.com/assets/foto-carolina.jpg",
-    "fotoPosition": "left center"
+    "parrafo1": "Soy Licenciada en Terapia Ocupacional con formación en Programación Neurolingüística (PNL) y Biodecodificación. Me especializo en el abordaje integral del dolor crónico y en ayudarte a recuperar tu calidad de vida.",
+    "parrafo2": "Mi enfoque combina la evidencia científica de la Terapia Ocupacional con herramientas de transformación mental y emocional, brindándote un camino personalizado hacia el bienestar.",
+    "parrafo3": "A través de sesiones individuales, formaciones y mi libro, comparto estrategias que podés aplicar en tu vida cotidiana para reducir limitaciones y potenciar tu autonomía.",
+    "imagen": "assets/foto-carolina.jpg",
+    "fotoPosition": "center center"
   },
   "turnos": {
     "subtitulo": "Agenda online",
-    "titulo": "PedÃ­ tu turno",
-    "descripcion": "CompletÃ¡ el formulario y te confirmo disponibilidad en menos de 24 horas. Las sesiones son individuales, online o presenciales.",
+    "titulo": "Pedí tu turno",
+    "descripcion": "Completá el formulario y te confirmo disponibilidad en menos de 24 horas. Las sesiones son individuales, online o presenciales.",
     "emailDestino": "carolina@gestion.en.salud"
   },
   "formaciones": [
     {
-      "icono": "ð§ ",
+      "icono": "🧠",
       "titulo": "PNL aplicada a la salud",
-      "descripcion": "Estrategias de ProgramaciÃ³n NeurolingÃ¼Ã­stica para transformar patrones mentales y mejorar el bienestar fÃ­sico y emocional.",
+      "descripcion": "Estrategias de Programación Neurolingüística para transformar patrones mentales y mejorar el bienestar físico y emocional.",
       "emailContacto": "carolina@gestion.en.salud",
       "imagen": ""
     },
     {
-      "icono": "ð¿",
-      "titulo": "BiodecodificaciÃ³n",
-      "descripcion": "Exploramos el lenguaje del cuerpo y cÃ³mo los conflictos emocionales se manifiestan en sÃ­ntomas fÃ­sicos.",
+      "icono": "🌿",
+      "titulo": "Biodecodificación",
+      "descripcion": "Exploramos el lenguaje del cuerpo y cómo los conflictos emocionales se manifiestan en síntomas físicos.",
       "emailContacto": "carolina@gestion.en.salud",
       "imagen": ""
     },
     {
-      "icono": "ðª",
+      "icono": "💪",
       "titulo": "Fibromialgia: caja de herramientas para salir adelante",
-      "descripcion": "Un abordaje integral para entender y gestionar la fibromialgia, combinando estrategias prÃ¡cticas de Terapia Ocupacional, PNL y BiodecodificaciÃ³n.",
+      "descripcion": "Un abordaje integral para entender y gestionar la fibromialgia, combinando estrategias prácticas de Terapia Ocupacional, PNL y Biodecodificación.",
       "emailContacto": "carolina@gestion.en.salud",
       "imagen": ""
     }
   ],
   "libro": {
-    "p1": "Una guÃ­a teÃ³rico-prÃ¡ctica para disminuir el dolor crÃ³nico combinando estrategias de Terapia Ocupacional y ProgramaciÃ³n NeurolingÃ¼Ã­stica.",
-    "p2": "Disponible en formato fisico y como eBook en Amazon Kindle. LlevÃ¡ el conocimiento en tu celular o tablet y empezÃ¡ a aplicar las herramientas cuando y donde quieras.",
+    "p1": "Una guía teórico-práctica para disminuir el dolor crónico combinando estrategias de Terapia Ocupacional y Programación Neurolingüística.",
+    "p2": "Disponible como eBook en Amazon Kindle. Llevá el conocimiento en tu celular o tablet y empezá a aplicar las herramientas cuando y donde quieras.",
     "precio": "eBook $14.99 USD",
     "link": "https://www.amazon.com/-/es/dp/B0GYF6ZF5Q/ref=tmm_kin_swatch_0"
   },
   "comunidad": {
-    "titulo": "Sumate a mi comunidad de WhatsApp",
-    "desc": "Un espacio para compartir recursos, consejos de bienestar, novedades de cursos y mucho mÃ¡s. Gratuita y sin spam."
+    "titulo": "Sumate a mi comunidad<br>de <em>WhatsApp</em>",
+    "desc": "Un espacio para compartir recursos, consejos de bienestar, novedades de cursos y mucho más. Gratuita y sin spam."
   },
   "asociaciones": [
     {
-      "icono": "ðï¸",
+      "icono": "🏛️",
       "nombre": "Terapia Ocupacional Argentina",
-      "descripcion": "AsociaciÃ³n nacional de referencia para profesionales de Terapia Ocupacional en Argentina.",
+      "descripcion": "Asociación nacional de referencia para profesionales de Terapia Ocupacional en Argentina.",
       "url": "https://terapia-ocupacional.org.ar/"
     },
     {
-      "icono": "ð¸",
+      "icono": "📸",
       "nombre": "ATOPBA",
-      "descripcion": "AsociaciÃ³n de Terapistas Ocupacionales de la Provincia de Buenos Aires.",
+      "descripcion": "Asociación de Terapistas Ocupacionales de la Provincia de Buenos Aires.",
       "url": "https://www.instagram.com/atopbaok/?hl=es"
     }
   ]
