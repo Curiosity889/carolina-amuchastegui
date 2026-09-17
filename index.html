@@ -38,12 +38,11 @@
       display: flex; align-items: center; justify-content: space-between;
       height: 60px;
     }
-    .nav-logo {
-      font-family: 'Poppins', sans-serif;
-      color: var(--cream);
-      font-size: 1rem;
-      font-weight: 600;
-      letter-spacing: 0.02em;
+    .nav-logo a { display: flex; align-items: center; }
+    .nav-logo img {
+      height: 40px;
+      width: auto;
+      display: block;
     }
     .nav-links {
       display: flex; gap: 1.5rem; list-style: none;
@@ -341,7 +340,9 @@
 
 <!-- ── NAV ── -->
 <nav>
-  <div class="nav-logo">Lic. Carolina Amuchastegui</div>
+  <div class="nav-logo">
+    <a href="#inicio"><img src="assets/logo-carolina-crema.png" alt="Carolina Amuchastegui · Gestión en Salud" /></a>
+  </div>
   <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Menú">
     <span></span><span></span><span></span>
   </button>
@@ -647,6 +648,7 @@
 
 <!-- ── FOOTER ── -->
 <footer>
+  <img src="assets/logo-carolina-crema.png" alt="Carolina Amuchastegui" style="height:32px; width:auto; opacity:0.6; margin-bottom:0.8rem; display:block; margin-left:auto; margin-right:auto;" />
   <p>© 2025 Lic. Carolina Amuchastegui · Terapia Ocupacional · PNL · Biodecodificación</p>
   <p style="margin-top:0.4rem;">Diseño web personalizado · <a href="https://www.instagram.com/gestion.en.salud" target="_blank">@gestion.en.salud</a></p>
 </footer>
